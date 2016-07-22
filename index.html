@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>For Lisa</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="css/base.css">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="row"> 
+        <div class="col-lg-6 col-lg-offset-3">
+          <div class="input-group">
+            <input id="searchBox" type="text" class="form-control" placeholder="Search for..." onFocus="stop()">
+            <span class="input-group-btn">
+              <button class="btn btn-default" type="button"><i class="fa fa-search fa-2x"></i></button>
+            </span>
+          </div><!-- /input-group -->
+        </div><!-- /.col-lg-6 -->
+      </div><!-- /.row -->
+    </div><!-- /.container -->
+
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+    <script>
+
+    var searchArray = ["Population of Rochester, NY","Number of grocery stores in Wyoming","Ratio of cats to dogs in Pigsknuckle, AK"], //list of query options
+      captionLength = 0, // set caption length var to 0
+      caption = '', // set initial caption to blank
+      counter = 0; // set counter for loop 
+
+    $(document).ready(function() {
+        captionEl = $('#searchBox'); // id the input search box
+        timeout(); // run the timout function
+    });
+
+    function timeout() {
+      if($("#searchBox").is(':focus')){ // check to see if user has focused search box to enter query
+        return
+      }
+      setTimeout(function () {
+          testTypingEffect(counter)
+          if(counter < searchArray.length - 1){ // check to ensure we haven't exceeded the length of our search input array
+            counter+=1;
+          }
+          else{
+            counter=0;
+          }
+          timeout(); // recursion as loop mechanism
+      }, 3000); // set loop timing to 3 seconds
+    }
+
+    function testTypingEffect(inCount) {
+      caption = searchArray[inCount]; // set caption 
+      type();
+    }
+
+    function type() {
+      if($("#searchBox").is(':focus')){ // check if user has focused search box
+        return
+      }
+        captionEl.val(caption.substr(0, captionLength++)); // iterate through caption length
+        if(captionLength < caption.length+1) {
+            setTimeout('type()', 50); // recursion for loop
+        } else {
+            captionLength = 0; // reset to default val
+            caption = ''; // reset to default val
+        }
+    }
+    </script>
+
+  </body>
+</html>
